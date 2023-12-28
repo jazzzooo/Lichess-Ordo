@@ -1,0 +1,26 @@
+CC = gcc
+CFLAGS = -pipe -DNDEBUG -DMY_SEMAPHORES -I myopt -I sysport
+WARN = -Wwrite-strings -Wconversion -Wshadow -Wparentheses -Wlogical-op -Wall -Wextra -Wdeclaration-after-statement
+OPT = -O3 -flto
+LIBS = -lm -lpthread
+
+EXE = ordo
+SRC = $(wildcard myopt/*.c sysport/*.c *.c)
+DEPS = $(wildcard myopt/*.h sysport/*.h *.h)
+OBJ = $(SRC:.c=.o)
+
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) $(WARN) $(OPT) -c $< -o $@
+
+$(EXE): $(OBJ)
+	$(CC) $(CFLAGS) $(WARN) $(OPT) $^ -o $@ $(LIBS)
+
+.PHONY: all install clean
+
+all: $(EXE)
+
+install:
+	install -m 0755 $(EXE) /usr/bin/$(EXE)
+
+clean:
+	rm -f $(OBJ) *~ ordo-v*.tar.gz ordo-v*-win.zip *.out
