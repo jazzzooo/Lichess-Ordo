@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -pipe -DNDEBUG -DMY_SEMAPHORES -I myopt -I sysport
 WARN = -Wwrite-strings -Wconversion -Wshadow -Wparentheses -Wlogical-op -Wall -Wextra -Wdeclaration-after-statement
-OPT = -O3 -flto -march=native
-LIBS = -lm -lpthread
+OPT = -O3 -flto -flto-partition=one -march=native
+LIBS = -lm -lpthread -flto=jobserver
 
 EXE = ordo
 SRC = $(wildcard myopt/*.c sysport/*.c *.c)
