@@ -8,6 +8,7 @@ Program for quickly calculating ~optimal~ good chess ratings
 
 ### Dependencies
 * Python 3
+* tqdm
 * Numpy
 * Cython
 * OpenMP
