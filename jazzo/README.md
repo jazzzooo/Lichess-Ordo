@@ -23,7 +23,7 @@ Try experimenting with different flags and compilers. AMD users might benefit fr
 Extract the ratings file in the `data` folder with `pzstd -d data/packed-blitz.zst`
 
 ```
-./jazzo
+./jazzo.py
 ```
 
 ## License
