@@ -7,11 +7,11 @@ from tqdm import tqdm
 # The ratigns can get stuck in a local minima
 # so we do a big jump sometimes to adjust them.
 # These jump values are similar to the K-factor in Elo
-SMALL_JUMP = 1.7
-LARGE_JUMP = 75.0
-LARGE_EVERY = 100
+SMALL_JUMP = 1.6
+LARGE_JUMP = 33
+LARGE_EVERY = 21
 
-STEPS = 1000
+STEPS = 2500
 
 # Load densely packed data
 with open("data/packed-blitz", "rb") as f:
@@ -38,10 +38,12 @@ def optimize(steps=STEPS, small_jump=SMALL_JUMP, large_jump=LARGE_JUMP, large_ev
     iterator = tqdm(range(steps), smoothing=0) if verbose else range(steps)
     for i in iterator:
         prediction_errors(errors, ratings, 1 / ratings, scored, opponents, opp_played, indices, n_players)
-        adjust(ratings, errors, total, n_players, large_jump if not i % int(large_every) else small_jump)
+        adjust(ratings, errors, total, n_players, small_jump if i % int(large_every) else large_jump)
+        loss = np.abs(errors).sum()
         if verbose:
-            loss = np.abs(errors).sum()
-            iterator.set_description(f"loss: {loss:16f}")
+            iterator.set_description(f"loss: {loss:16.5f}")
+        if loss < 1.0:
+            break
     # return ratings, np.abs(errors).sum()
     return ratings, np.abs(errors).sum()
 

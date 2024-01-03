@@ -15,9 +15,9 @@ Program for quickly calculating ~optimal~ good chess ratings
 
 ### Building
 ```
-CC="clang" CFLAGS="-march=native -mtune=native -Ofast -fopenmp -g0" python3 setup.py build_ext --inplace
+python3 setup.py build_ext --inplace
 ```
-Try experimenting with different flags and compilers. AMD users might benefit from AOCC.
+Try experimenting with different flags and compilers in `setup.py`. AMD users might benefit from AOCC.
 
 ### Running
 Extract the ratings file in the `data` folder with `pzstd -d data/packed-blitz.zst`
