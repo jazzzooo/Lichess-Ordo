@@ -18,8 +18,8 @@ def prediction_errors(double[::1] errors, double[::1] ratings, double[::1] ratin
         errors[j] = scored[j] - score
 
 
-def adjust(double[::1] ratings, double[::1] errors, double[::1] total, int n_players, double K):
+def adjust(double[::1] ratings, double[::1] errors, double[::1] total_inv, int n_players, double K):
     cdef int i
     
     for i in prange(n_players, nogil=True):
-        ratings[i] = ratings[i] * 10 ** (K * (errors[i] / total[i]))
+        ratings[i] = ratings[i] * 10 ** (K * errors[i] * total_inv[i])

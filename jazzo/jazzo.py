@@ -20,7 +20,7 @@ with open("data/packed-blitz", "rb") as f:
     indices = np.zeros(n_players + 1, dtype=np.intc)
     indices[1:] = np.cumsum(n_opponents)
     n_pairings = n_opponents.sum()
-    total = np.fromfile(f, dtype=np.uint16, count=n_players).astype(np.float64)
+    totals_inv = 1 / np.fromfile(f, dtype=np.uint16, count=n_players).astype(np.float64)
     scored = np.fromfile(f, dtype=np.uint16, count=n_players).astype(np.float64) / 2
     opponents = np.ascontiguousarray(np.fromfile(f, dtype=np.uint32, count=n_pairings).astype(np.intc))
     opp_played = np.ascontiguousarray(np.fromfile(f, dtype=np.uint16, count=n_pairings).astype(np.intc))
@@ -38,7 +38,7 @@ def optimize(steps=STEPS, small_jump=SMALL_JUMP, large_jump=LARGE_JUMP, large_ev
     iterator = tqdm(range(steps), smoothing=0) if verbose else range(steps)
     for i in iterator:
         prediction_errors(errors, ratings, 1 / ratings, scored, opponents, opp_played, indices, n_players)
-        adjust(ratings, errors, total, n_players, small_jump if i % int(large_every) else large_jump)
+        adjust(ratings, errors, totals_inv, n_players, small_jump if i % int(large_every) else large_jump)
         loss = np.abs(errors).sum()
         if verbose:
             iterator.set_description(f"loss: {loss:16.5f}")
