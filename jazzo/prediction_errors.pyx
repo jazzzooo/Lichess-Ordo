@@ -7,14 +7,14 @@ from cython.parallel import prange
 from libc.math cimport fabs
 
 
-def prediction_errors(double[::1] errors, double[::1] ratings, double[::1] ratings_inv, double[::1] scored, int[::1] opponents, int[::1] opp_played, int[::1] indices, int n_players):
+def prediction_errors(double[::1] errors, double[::1] ratings, double[::1] scored, int[::1] opponents, int[::1] opp_played, int[::1] indices, int n_players):
     cdef int j, k
     cdef double score
 
     for j in prange(n_players, nogil=True):
         score = 0.0
         for k in range(indices[j], indices[j + 1]):
-            score = score + opp_played[k] / (1.0 + (ratings[opponents[k]] * ratings_inv[j]))
+            score = score + opp_played[k] * ratings[j] / (ratings[j] + ratings[opponents[k]]) 
         errors[j] = scored[j] - score
 
 

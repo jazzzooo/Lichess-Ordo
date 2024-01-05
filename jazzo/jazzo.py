@@ -37,7 +37,7 @@ def optimize(steps=STEPS, small_jump=SMALL_JUMP, large_jump=LARGE_JUMP, large_ev
     # seeding any kind of ratings will make it converge 100x faster
     iterator = tqdm(range(steps), smoothing=0) if verbose else range(steps)
     for i in iterator:
-        prediction_errors(errors, ratings, 1 / ratings, scored, opponents, opp_played, indices, n_players)
+        prediction_errors(errors, ratings, scored, opponents, opp_played, indices, n_players)
         adjust(ratings, errors, totals_inv, n_players, small_jump if i % int(large_every) else large_jump)
         loss = np.abs(errors).sum()
         if verbose:
