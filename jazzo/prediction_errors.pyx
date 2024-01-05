@@ -4,7 +4,6 @@
 # cython: wraparound=False
 
 from cython.parallel import prange
-from libc.math cimport fabs
 
 
 def prediction_errors(double[::1] errors, double[::1] ratings, double[::1] scored, int[::1] opponents, int[::1] opp_played, int[::1] indices, int n_players):
