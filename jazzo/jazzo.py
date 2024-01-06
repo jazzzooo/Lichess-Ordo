@@ -4,9 +4,8 @@ import numpy as np
 from prediction_errors import adjust, prediction_errors
 from tqdm import tqdm
 
-# The ratigns can get stuck in a local minima
-# so we do a big jump sometimes to adjust them.
-# These jump values are similar to the K-factor in Elo
+# It helps to do big adjustments sometimes to make convergence faster.
+# Especially when you start everyone off at 1500
 SMALL_JUMP = 1.6
 LARGE_JUMP = 33
 LARGE_EVERY = 21
