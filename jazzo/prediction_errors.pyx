@@ -10,7 +10,7 @@ def prediction_errors(double[::1] errors, double[::1] ratings, double[::1] score
     cdef int j, k
     cdef double score
 
-    for j in prange(n_players, nogil=True):
+    for j in prange(n_players, nogil=True, schedule='guided'):
         score = 0.0
         for k in range(indices[j], indices[j + 1]):
             score = score + opp_played[k] * ratings[j] / (ratings[j] + ratings[opponents[k]]) 
@@ -20,5 +20,5 @@ def prediction_errors(double[::1] errors, double[::1] ratings, double[::1] score
 def adjust(double[::1] ratings, double[::1] errors, double[::1] total_inv, int n_players, double K):
     cdef int i
     
-    for i in prange(n_players, nogil=True):
+    for i in prange(n_players, nogil=True, schedule='guided'):
         ratings[i] = ratings[i] * 10 ** (K * errors[i] * total_inv[i])
