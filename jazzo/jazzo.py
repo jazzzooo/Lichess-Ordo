@@ -13,7 +13,7 @@ LARGE_EVERY = 21
 STEPS = 2500
 
 # Load densely packed data
-with open("data/packed-blitz", "rb") as f:
+with open("data/blitz.packed", "rb") as f:
     n_players = int.from_bytes(f.read(4), "little")
     n_opponents = np.fromfile(f, dtype=np.uint16, count=n_players).astype(np.intc)
     indices = np.zeros(n_players + 1, dtype=np.intc)
