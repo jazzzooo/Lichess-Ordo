@@ -2,7 +2,7 @@
 
 import numpy as np
 from prediction_errors import adjust, prediction_errors
-from tqdm import tqdm
+from tqdm import trange
 
 # It helps to do big adjustments sometimes to make convergence faster.
 # Especially when you start everyone off at 1500
@@ -65,7 +65,7 @@ def optimize(steps=STEPS, small_jump=SMALL_JUMP, large_jump=LARGE_JUMP, large_ev
     errors = np.zeros(n_players, dtype=np.float64)
     # also we dont actually need to start with 1500 ratings for everyone
     # seeding any kind of ratings will make it converge 100x faster
-    iterator = tqdm(range(steps), smoothing=0) if verbose else range(steps)
+    iterator = trange(steps, smoothing=0) if verbose else range(steps)
     for i in iterator:
         prediction_errors(errors, ratings, scored, opponents, white_opp_totals, black_opp_totals, indices, WA)
         adjust(ratings, errors, totals_inv, small_jump if i % int(large_every) else large_jump)
