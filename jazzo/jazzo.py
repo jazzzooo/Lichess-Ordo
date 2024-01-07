@@ -74,7 +74,6 @@ def optimize(steps=STEPS, small_jump=SMALL_JUMP, large_jump=LARGE_JUMP, large_ev
             iterator.set_description(f"loss: {loss:16.5f}")
         if loss < 1.0:
             break
-    # return ratings, np.abs(errors).sum()
     return ratings, np.abs(errors).sum()
 
 
