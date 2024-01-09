@@ -20,7 +20,7 @@ python3 setup.py build_ext --inplace
 Try experimenting with different flags and compilers in `setup.py`. AMD users might benefit from AOCC.
 
 ### Running
-Extract the ratings file in the `data` folder with `pzstd -d data/packed-blitz.zst`
+Extract the ratings file in the `data` folder with `pzstd -d data/blitz.packed.zst`
 
 ```
 ./jazzo.py
